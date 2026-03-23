@@ -39,17 +39,17 @@ main:
 	movl	$0, -56(%rbp) //Moves 0 to %rbp - 56
 	jmp	.L2 // Jumps to .L2 code
 .L3: // Loops through given array to print given array values
-	movl	-56(%rbp), %eax // Moves (%rbp) - 56 to %eax
+	movl	-56(%rbp), %eax // Moves (%rbp) - 56 to %eax (i = 0)
 	cltq // (?)
 	movl	-32(%rbp,%rax,4), %eax // %eax = (%rbp + %rax * 4) - 32 
 	movl	%eax, %esi // Moves %eax to %esi
 	leaq	.LC1(%rip), %rax //Takes address of .LC1(%rip) and sets in %rax (.string "%d ")
 	movq	%rax, %rdi // Moves %rax to %rdi
-	movl	$0, %eax // Moves 0 to %eax (i = 0)
+	movl	$0, %eax // Moves 0 to %eax 
 	call	printf@PLT //Call print function (Prints values of given array)
-	addl	$1, -56(%rbp) // Adds 1 to %rbp - 56 (increments)
+	addl	$1, -56(%rbp) // Adds 1 to %rbp - 56 (increments, i++)
 .L2: //1st For Loop Conditional Statement 
-	movl	-56(%rbp), %eax // Moves (%rbp) - 56 to %eax
+	movl	-56(%rbp), %eax // Moves (%rbp) - 56 to %eax (i = 0)
 	cmpl	-44(%rbp), %eax //Compares (%rbp) - 44 to %eax (i < size)
 	jl	.L3 // Jumps to .L3 code if %rbp - 44 is less than %eax (First loop statement)
 	movl	$0, -52(%rbp) // Moves 0 to (%rbp) - 52
@@ -72,13 +72,13 @@ main:
 	leaq	0(,%rcx,4), %rsi // %rcx multiplies by 4, value stores in %rsi
 	movq	-40(%rbp), %rcx //Moves value of -40(%rbp) to %rcx
 	addq	%rsi, %rcx // Adds %rcx to %rsi, value stores in %rcx
-	imull	%edx, %eax // Multiplies %edx and %eax, value stores in %eax
+	imull	%edx, %eax // Multiplies %edx and %eax, value stores in %eax // *(arrPtr + i) = (*(arrPtr + i)) * (*(arrPtr + i))
 	movl	%eax, (%rcx) //Moves %eax to %rcx
 	addl	$1, -52(%rbp) //Adds 1 to (%rbp) - 52 (increments, i++)
 .L4://2nd For Loop Conditional Statement 
 	movl	-52(%rbp), %eax //Moves (%rbp) - 52 to %eax (i = 0)
 	cmpl	-44(%rbp), %eax //Comparing (%rbp) - 44 to %eax (i < size)
-	jl	.L5 // Jumps to .L5 code if %rbp - 44 is less than %eax
+	jl	.L5 // Jumps to .L5 code if %rbp - 44 is less than %eax (Second Loop Statement)
 	leaq	.LC2(%rip), %rax // Takes address of .LC2(%rip) and stores in %rax (.string "Squared Array: ")
 	movq	%rax, %rdi // Moves %rax to %rdi
 	movl	$0, %eax //Moves 0 to %eax
@@ -94,11 +94,11 @@ main:
 	movq	%rax, %rdi // Moves %rax to %rdi
 	movl	$0, %eax // Moves value 0 to %eax
 	call	printf@PLT //Call print function (Prints out squared values)
-	addl	$1, -48(%rbp) // Adds 1 to %rbp (increment, i++)
+	addl	$1, -48(%rbp) // Adds 1 to %rbp (increments, i++)
 .L6: //3rd For Loop Conditional Statement
-	movl	-48(%rbp), %eax // Moves -48(%rbp) to %eax
+	movl	-48(%rbp), %eax // Moves -48(%rbp) to %eax (i = 0)
 	cmpl	-44(%rbp), %eax //Comparing -44(%rbp) to %eax (i < size)
-	jl	.L7 //Jumps to .L7 code if %rbp is less than %eax
+	jl	.L7 //Jumps to .L7 code if %rbp - 44 is less than %eax
 	movl	$0, %eax // Moves value 0 to %eax
 	movq	-8(%rbp), %rdx // Moves value of -8(%rbp) to %rdx
 	subq	%fs:40, %rdx // Subtract %fs:40 from %rdx
